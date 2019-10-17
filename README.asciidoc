@@ -1,0 +1,73 @@
+kakoune-extra-filetypes
+=======================
+
+This repository is a collection of https://github.com/mawww/kakoune[Kakoune]
+highlighters for file formats that are not supported out of the box.
+
+Installation
+------------
+
+The following will deploy all the highlighters to
+`/usr/local/share/kakoune-extra-filetypes/rc` by default:
+
+```
+# make install
+```
+
+Tweak the values of the `DESTDIR` and `PREFIX` variables according to your
+needs, e.g.:
+
+```
+$ make DESTDIR=/tmp/test PREFIX=/usr/share
+```
+
+Usage
+-----
+
+If you've installed the extra highlighters through your distribution's
+package manager, they might be stored in a directory other than the
+default one (c.f. above).
+
+Autoload
+~~~~~~~~
+
+The "autoload" method lets the editor load the entire collection.
+
+If you don't have an `autoload` directory already, you'll need to
+create it, and make sure all the builtin scripts (provided by the
+https://github.com/mawww/kakoune[Kakoune] editor) are loaded:
+
+```
+$ mkdir -p "${XDG_CONFIG_HOME:-${HOME}/.config}"/kak/autoload
+$ ln -s /usr/share/kak/rc "${XDG_CONFIG_HOME:-${HOME}/.config}"/kak/autoload
+```
+
+Note that your distribution might have installed the editor's scripts in
+a directory that isn't `/usr/share/kak`, you'll have to modify this path
+according if that's the case.
+
+Now create an additional symbolic link in `autoload` that points at the
+extra highlighters:
+
+```
+$ ln -s /usr/local/share/kakoune-extra-filetypes/rc "${XDG_CONFIG_HOME:-${HOME}/.config}"/kak/autoload
+```
+
+Individual loading
+~~~~~~~~~~~~~~~~~~
+
+If you don't want to create an `autoload` directory, you can load all the
+highlighters with the following code (to append to your `kakrc` file):
+
+```
+evaluate-commands %sh{
+    find "${kak_runtime}"/../kakoune-extra-filetypes/rc -type f -name \*\\.kak -exec printf 'source %s\n' '{}' \;
+}
+```
+
+You can also individually pick which highlighters to load in your `kakrc`
+file, with the `source` command:
+
+```
+source %val{runtime}/../kakoune-extra-filetypes/rc/…
+```
