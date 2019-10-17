@@ -18,7 +18,7 @@ Tweak the values of the `DESTDIR` and `PREFIX` variables according to your
 needs, e.g.:
 
 ```
-$ make DESTDIR=/tmp/test PREFIX=/usr/share
+$ make DESTDIR=/tmp/test PREFIX=/usr
 ```
 
 Usage
