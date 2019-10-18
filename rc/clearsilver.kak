@@ -36,7 +36,7 @@ add-highlighter shared/clearsilver/inline_cs/string_simple region "'" "'" fill s
 
 add-highlighter shared/clearsilver/inline_cs/code/ regex '(<\?cs\b)|(\?>)' 0:module
 add-highlighter shared/clearsilver/inline_cs/code/ regex \b[+-]?(0x\w+|#?\d+)\b 0:value
-add-highlighter shared/clearsilver/inline_cs/code/ regex \b(subcount|name|first|last|abs|max|min|string.slice|string.find|string.length|_)\( 1:function
+add-highlighter shared/clearsilver/inline_cs/code/ regex \b(subcount|name|first|last|abs|max|min|string.slice|string.find|string.length|_)\( 1:builtin
 add-highlighter shared/clearsilver/inline_cs/code/ regex \b(var|evar|lvar|include|linclude|set|name|if|else|elif|alt|each|loop|with|def|call): 1:keyword
 add-highlighter shared/clearsilver/inline_cs/code/ regex /(if|alt)\b 0:keyword
 
