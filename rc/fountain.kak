@@ -45,6 +45,6 @@ add-highlighter shared/fountain/ regex ^\h*\([^\n]+?\) 0:italic
 
 add-highlighter shared/fountain/ regex \[\[.+?\]\] 0:comment
 add-highlighter shared/fountain/ regex /\*.+?\*/ 0:comment
-add-highlighter shared/fountain/ regex ^\h*(=[^\n]+) 1:comment
+add-highlighter shared/fountain/ regex ^\h*(=[^=][^\n]*) 1:comment
 
 }
