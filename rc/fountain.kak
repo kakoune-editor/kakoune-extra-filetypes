@@ -25,7 +25,7 @@ provide-module fountain %{
 
 add-highlighter shared/fountain group
 
-add-highlighter shared/fountain/ regex ^([A-Z][^\n]+:) 1:mono
+add-highlighter shared/fountain/ regex ^([A-Z][\w\h_-]+:)[^\n]+ 1:mono
 add-highlighter shared/fountain/ regex ^\h*={3,}\n 0:bullet
 add-highlighter shared/fountain/ regex ^\h*(?<lyric_op>~)([^\n]+) lyric_op:bullet 2:block
 add-highlighter shared/fountain/ regex ^\h*(?<center_op_open>>)[^\n]+?(?<center_op_close><)$ center_op_open:bullet center_op_close:bullet
