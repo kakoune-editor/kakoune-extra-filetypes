@@ -24,5 +24,6 @@ add-highlighter shared/git-commit-overflow group
 
 add-highlighter shared/git-commit-overflow/ regex ^\h*[^#@+-][^\n]{71}(?<overflow>[^\n]+) overflow:Error
 add-highlighter shared/git-commit-overflow/ regex \A\n*[^\n]{50}(?<overflow>[^\n]+) overflow:Error
+add-highlighter shared/git-commit-overflow/ regex \A[^\n]*\n([^\n]+) 1:Error
 
 }
