@@ -22,8 +22,11 @@ provide-module git-commit-overflow %{
 
 add-highlighter shared/git-commit-overflow group
 
+# Commit message/body
 add-highlighter shared/git-commit-overflow/ regex ^\h*[^#@+-][^\n]{71}(?<overflow>[^\n]+) overflow:Error
+# Commit title/summary
 add-highlighter shared/git-commit-overflow/ regex \A\n*[^\n]{50}(?<overflow>[^\n]+) overflow:Error
+# Line following the title/summary, should be empty
 add-highlighter shared/git-commit-overflow/ regex \A[^\n]*\n([^\n]+) 1:Error
 
 }
