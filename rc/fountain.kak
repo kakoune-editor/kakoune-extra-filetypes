@@ -29,10 +29,11 @@ add-highlighter shared/fountain/ regex ^([A-Z][\w\h_-]+:)[^\n]+ 1:mono
 add-highlighter shared/fountain/ regex ^\h*={3,}\n 0:bullet
 add-highlighter shared/fountain/ regex ^\h*(?<lyric_op>~)([^\n]+) lyric_op:bullet 2:block
 add-highlighter shared/fountain/ regex ^\h*(?<center_op_open>>)[^\n]+?(?<center_op_close><)$ center_op_open:bullet center_op_close:bullet
-# FIXME: doesn't handle escaping
-add-highlighter shared/fountain/ regex \*[^\n]+\* 0:italic
-add-highlighter shared/fountain/ regex \*\*[^\n]+\*\* 0:bold
-add-highlighter shared/fountain/ regex _[^\n]+_ 0:underline
+
+add-highlighter shared/fountain/ regex (?<!\*)(\*([^\s*]|([^\s*](\n?[^\n*])*[^\s*]))\*)(?!\*) 1:italic
+add-highlighter shared/fountain/ regex (?<!\*)(\*\*([^\s*]|([^\s*](\n?[^\n*])*[^\s*]))\*\*)(?!\*) 1:bold
+add-highlighter shared/fountain/ regex (?<!_)(_([^\s_]|([^\s_](\n?[^\n_])*[^\s_]))_)(?!_) 1:+u
+add-highlighter shared/fountain/ regex (?<!\*)(\*\*\*([^\s*]|([^\s*](\n?[^\n*])*[^\s*]))\*\*\*)(?!\*) 1:+ib
 
 add-highlighter shared/fountain/ regex ^\n\h*(?<scene_heading>((?i)(INT|EXT|EST|INT\./EXT|INT/EXT|I/E)\b)[^\n]*?)(?<scene_number>#[^#\n]+#)?\n(?=\n) scene_heading:title scene_number:value
 add-highlighter shared/fountain/ regex ^\n\h*(?<scene_heading_op>\.)(?<scene_heading>[^\n]*?)(?<scene_number>#[^#\n]+#)?\n(?=\n) scene_heading_op:bullet scene_heading:title scene_number:value
