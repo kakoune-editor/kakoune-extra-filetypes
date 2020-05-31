@@ -29,9 +29,12 @@ provide-module gemini %[
 # ‾‾‾‾‾‾‾‾‾‾‾‾
 
 add-highlighter shared/gemini regions
-add-highlighter shared/gemini/text default-region group
-add-highlighter shared/gemini/preformatted region ^``` ^``` fill mono
 
+add-highlighter shared/gemini/preformatted region ^``` ^```(?S).* group
+add-highlighter shared/gemini/preformatted/ fill mono
+add-highlighter shared/gemini/preformatted/not_rendered regex ^```(?S)(.+) 1:Error
+
+add-highlighter shared/gemini/text default-region group
 add-highlighter shared/gemini/text/url regex ^(=>)\h*(?<url>\S+)(\h+(?S)(?<url_name>.+))? 1:link url:link url_name:comment
 add-highlighter shared/gemini/text/header regex ^(#{1,3}\h*(?S).+) 0:header
 add-highlighter shared/gemini/text/list_item regex ^(?<bullet>\*)\h*(?<item>(?S).+) bullet:bullet item:list
