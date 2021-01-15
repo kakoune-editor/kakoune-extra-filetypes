@@ -4,7 +4,11 @@
 # Detection
 # ‾‾‾‾‾‾‾‾‾
 
-hook global BufCreate .*/BUILD %{
+hook global BufCreate .*/(BUILD|WORKSPACE) %{
+    set-option buffer filetype bazel_build
+}
+
+hook global BufCreate .+\.(bazel|bzl) %{
     set-option buffer filetype bazel_build
 }
 
