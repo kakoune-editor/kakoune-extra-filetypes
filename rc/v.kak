@@ -46,25 +46,25 @@ add-highlighter shared/v/comment_line region '//' $ fill comment
 
 add-highlighter shared/v/code/ regex %{-?([0-9]*\.(?!0[xX]))?\b([0-9_]+|0[xX][0-9a-fA-F]+)\.?([eE][+-]?[0-9]+)?\.*\b|(none|true|false)\b} 0:value
 
-add-highlighter shared/v/code/ regex \b(chan|err|i8|u8|byte|i16|u16|int|u32|i64|u64|f32|f64|ptr|voidptr|r|size_t|map|rune|string)\b 0:type
-
-add-highlighter shared/v/code/ regex \b(print|println|eprint|eprintln|exit|panic|print_backtrace|dump|rmdir_all|mkdir|exec|ls|mv)\b 0:builtin
-
 add-highlighter shared/v/code/ regex (<|>|=|\+|-|\*|/|%|~|&|\|||\^|!|\?|:=) 0:operator
 
 evaluate-commands %sh{
 	keywords='if as asm assert atomic break const continue else embed enum fn for go import in interface is lock match module mut or pub return rlock select shared sizeof static struct type typeof union __offsetof free unsafe strlen strncmp malloc goto defer'
 	attributes='deprecated inline heap manualfree live direct_array_access typedef windows_stdcall console json: raw'
 	comptime='if else for'
+	types='chan err i8 u8 byte i16 u16 int u32 i64 u64 f32 f64 ptr voidptr r size_t map rune string'
+	functions='print println eprint eprintln exit panic print_backtrace dump'
 
 	join() { sep=$2; eval set -- $1; IFS="$sep"; echo "$*"; }
 
 	# Add the language's grammar to the static completion list
-	printf %s\\n "declare-option str-list v_static_words $(join "${keywords} ${attributes} ${comptime}" ' ')"
+	printf %s\\n "declare-option str-list v_static_words $(join "${keywords} ${attributes} ${comptime} ${types} ${functions}" ' ')"
 
 	# Highlight keywords
 	printf %s "
 		add-highlighter shared/v/code/ regex (\b($(join "${keywords}" '|'))\b|(\[($(join "${attributes}" '|')([^\]|(^\n)]*))\])|([\$]($(join "${comptime}" '|')))(?:(?![\s+|\{|\}]))*) 0:keyword
+		add-highlighter shared/v/code/ regex \b($(join "${types}" '|'))\b 0:type
+		add-highlighter shared/v/code/ regex \b($(join "${functions}" '|'))\b 0:builtin
 	"
 }
 
