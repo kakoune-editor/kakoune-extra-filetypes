@@ -44,7 +44,7 @@ add-highlighter shared/v/single_string region "'" (?<!\\)(\\\\)*' fill string
 add-highlighter shared/v/comment region -recurse /\* /\* \*/ fill comment
 add-highlighter shared/v/comment_line region '//' $ fill comment
 
-add-highlighter shared/v/code/ regex %{-?([0-9]*\.(?!0[xX]))?\b([0-9_]+|0[xX][0-9a-fA-F]+)\.?([eE][+-]?[0-9]+)?\.*|none|true|false\b} 0:value
+add-highlighter shared/v/code/ regex %{-?([0-9]*\.(?!0[xX]))?\b([0-9_]+|0[xX][0-9a-fA-F]+)\.?([eE][+-]?[0-9]+)?\.*\b|(none|true|false)\b} 0:value
 
 add-highlighter shared/v/code/ regex \b(chan|err|i8|u8|byte|i16|u16|int|u32|i64|u64|f32|f64|ptr|voidptr|r|size_t|map|rune|string)\b 0:type
 
