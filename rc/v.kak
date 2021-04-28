@@ -25,6 +25,7 @@ hook global WinSetOption filetype=(?!v).* %{
     remove-highlighter window/v
 }
 
+decl str comment_line
 hook global BufSetOption filetype=v %{
     set-option buffer comment_line '//'
 }
