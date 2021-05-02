@@ -8,7 +8,7 @@
 # Detection
 # ‾‾‾‾‾‾‾‾‾
 
-hook global BufCreate .+\.(v|vsh) %{
+hook global BufCreate .+\.(v|vv|vsh) %{
     set-option buffer filetype v
 }
 
@@ -50,9 +50,9 @@ add-highlighter shared/v/code/ regex (<|>|=|\+|-|\*|/|%|~|&|\|||\^|!|\?|:=) 0:op
 
 evaluate-commands %sh{
 	keywords='if as asm assert atomic break const continue else embed enum fn for go import in interface is lock match module mut or pub return rlock select shared sizeof static struct type typeof union __offsetof free unsafe strlen strncmp malloc goto defer'
-	attributes='deprecated inline heap manualfree live direct_array_access typedef windows_stdcall console json: raw required'
+	attributes='deprecated inline heap manualfree live direct_array_access typedef windows_stdcall console json: raw required export if keep_args_alive unsafe'
 	comptime='if else for'
-	types='chan err i8 u8 byte i16 u16 int u32 i64 u64 f32 f64 ptr voidptr r size_t map rune string bool'
+	types='chan err i8 u8 byte i16 u16 int u32 i64 u64 f32 f64 ptr voidptr size_t map rune string bool'
 	functions='print println eprint eprintln exit panic print_backtrace dump'
 
 	join() { sep=$2; eval set -- $1; IFS="$sep"; echo "$*"; }
