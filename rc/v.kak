@@ -1,4 +1,5 @@
 ##
+
 ## v.kak by Conscat
 ##
 
@@ -25,9 +26,11 @@ hook global WinSetOption filetype=(?!v).* %{
     remove-highlighter window/v
 }
 
-decl str comment_line
+declare-option str comment_line
 hook global BufSetOption filetype=v %{
     set-option buffer comment_line '//'
+    set-option buffer comment_block_begin '/*'
+    set-option buffer comment_block_end   '*/'
 }
 
 provide-module v %§
