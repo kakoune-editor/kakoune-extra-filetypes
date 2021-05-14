@@ -5,24 +5,17 @@ hook global BufCreate .*\.p4 %{
 }
 
 # Regions definition are the same between c++ and objective-c
-evaluate-commands %sh{
-    ft="p4"
-    maybe_at=''
+add-highlighter shared/p4 regions
+add-highlighter shared/p4/code default-region group
+add-highlighter shared/p4/string region %{(?<!')(?<!'\\)"} %{(?<!\\)(?:\\\\)*"} fill string
+add-highlighter shared/p4/raw_string region %{R"([^(]*)\(} %{\)([^")]*)"} fill string
+add-highlighter shared/p4/comment region /\* \*/ group
+add-highlighter shared/p4/line_comment region // $ fill comment
+add-highlighter shared/p4/disabled region -recurse "#\h*if(?:def)?" ^\h*?#\h*if\h+(?:0|FALSE)\b "#\h*(?:else|elif|endif)" fill rgb:666666
+add-highlighter shared/p4/macro region %{^\h*?\K#} %{(?<!\\)\n} group
 
-    printf %s\\n '
-            add-highlighter shared/FT regions
-            add-highlighter shared/FT/code default-region group
-            add-highlighter shared/FT/string region %{MAYBEAT(?<!QUOTE)(?<!QUOTE\\)"} %{(?<!\\)(?:\\\\)*"} fill string
-            add-highlighter shared/FT/raw_string region %{R"([^(]*)\(} %{\)([^")]*)"} fill string
-            add-highlighter shared/FT/comment region /\* \*/ group
-            add-highlighter shared/FT/line_comment region // $ fill comment
-            add-highlighter shared/FT/disabled region -recurse "#\h*if(?:def)?" ^\h*?#\h*if\h+(?:0|FALSE)\b "#\h*(?:else|elif|endif)" fill rgb:666666
-            add-highlighter shared/FT/macro region %{^\h*?\K#} %{(?<!\\)\n} group
-
-            add-highlighter shared/FT/macro/ fill meta
-            add-highlighter shared/FT/macro/ regex ^\h*#include\h+(\S*) 1:module
-        ' | sed -e "s/FT/${ft}/g; s/QUOTE/'/g; s/MAYBEAT/${maybe_at}/;"
-}
+add-highlighter shared/p4/macro/ fill meta
+add-highlighter shared/p4/macro/ regex ^\h*#include\h+(\S*) 1:module
 
 
 add-highlighter shared/p4/code/ regex %{\b(lpm|exact|ternary|range|true|false|null)\b} 0:value
@@ -38,16 +31,11 @@ add-highlighter shared/p4/comment/ fill comment
 add-highlighter shared/p4/comment/ regex "(?<!\w)@\w+\b" 0:green
 
 # integer literals
-evaluate-commands %sh{ 
-    prefix="(\\\d+[ws])?"
-    printf %s\\n '
-        add-highlighter shared/p4/code/ regex %{\bPREFIX[0-9][0-9_]*\b} 0:value  
-        add-highlighter shared/p4/code/ regex %{\bPREFIX0[Xx][0-9a-fA-F]+\b} 0:value
-        add-highlighter shared/p4/code/ regex %{\bPREFIX0[dD][0-9_]+\b} 0:value
-        add-highlighter shared/p4/code/ regex %{\bPREFIX0[oO][0-7_]+\b} 0:value
-        add-highlighter shared/p4/code/ regex %{\bPREFIX0[bB][01_]+\b} 0:value
-        ' | sed -e "s/PREFIX/${prefix}/g"
-}
+add-highlighter shared/p4/code/ regex %{\b(\d+[ws])?[0-9][0-9_]*\b} 0:value
+add-highlighter shared/p4/code/ regex %{\b(\d+[ws])?0[Xx][0-9a-fA-F]+\b} 0:value
+add-highlighter shared/p4/code/ regex %{\b(\d+[ws])?0[dD][0-9_]+\b} 0:value
+add-highlighter shared/p4/code/ regex %{\b(\d+[ws])?0[oO][0-7_]+\b} 0:value
+add-highlighter shared/p4/code/ regex %{\b(\d+[ws])?0[bB][01_]+\b} 0:value
 
 hook -group p4-highlight global WinSetOption filetype=p4 %{
     add-highlighter window/ ref p4
