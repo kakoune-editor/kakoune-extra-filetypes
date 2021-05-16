@@ -1,8 +1,26 @@
-# Syntax highlighting for p4
-# p4.org
+# https://p4.org/
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+# Detection
+# ‾‾‾‾‾‾‾‾‾
+
 hook global BufCreate .*\.p4 %{
     set-option buffer filetype p4
 }
+
+# Initialization
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+hook -group p4-highlight global WinSetOption filetype=p4 %{
+    require-module p4
+    add-highlighter window/ ref p4
+    hook -once -always window WinSetOption filetype=.* %{ remove-highlighter window/p4 }
+}
+
+provide-module p4 %{
+
+# Highlighters
+# ‾‾‾‾‾‾‾‾‾‾‾‾
 
 # Regions definition are the same between c++ and objective-c
 add-highlighter shared/p4 regions
@@ -37,8 +55,4 @@ add-highlighter shared/p4/code/ regex %{\b(\d+[ws])?0[dD][0-9_]+\b} 0:value
 add-highlighter shared/p4/code/ regex %{\b(\d+[ws])?0[oO][0-7_]+\b} 0:value
 add-highlighter shared/p4/code/ regex %{\b(\d+[ws])?0[bB][01_]+\b} 0:value
 
-hook -group p4-highlight global WinSetOption filetype=p4 %{
-    add-highlighter window/ ref p4
-    hook -once -always window WinSetOption filetype=.* %{ remove-highlighter window/p4 }
 }
-
